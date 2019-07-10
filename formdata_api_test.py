@@ -52,6 +52,76 @@ def data_search(user_id):
     else:
         print("NO DATA.")
 
+def post36():
+    # python3.x
+    import urllib.parse
+    import urllib.request
+    import json
+    host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=vWjMjyPllXDpgxAFDinRj4E7&client_secret=jU0KGMZUVGujYR7vS2YP5EWIOqXLbaHe'
+    request = urllib.request.Request(host)
+    request.add_header('Content-Type', 'application/json; charset=UTF-8')
+    response = urllib.request.urlopen(request)
+    content = response.read().decode(encoding='utf-8')
+    if (content):
+        pass
+    result=json.loads(content)
+    expries_in=result["expires_in"]
+    access_token=result["access_token"]
+    url = "https://aip.baidubce.com/rest/2.0/face/v3/faceverify?access_token=" + access_token
+
+    import base64
+    f = open("sy.jpg", 'rb')
+    img = base64.b64encode(f.read()).decode(encoding='utf-8')
+
+    # params = "[{\"image\":\"http://kousuanti.oss-cn-hangzhou.aliyuncs.com/2019_07_09_221537_sy.jpg\",\"image_type\":\"URL\"}]"
+    params = {"image":img, "image_type":"BASE64"}
+    params = json.dumps(params)
+    params = "[" + params + "]"
+
+    # params = urllib.parse.urlencode(params).encode(encoding='utf-8')    # encode 将字符串编码为字节； decode将字节解码为字符串；
+    params = params.encode()
+    request = urllib.request.Request(url=url, data=params)                # post data 必须为字节，不能是字符串
+    request.add_header('Content-Type', 'application/json')
+    response = urllib.request.urlopen(request)
+    content = response.read()
+    if content:
+        print(content)
+
+
+def post27():
+    # python2.x  不严格区分字节和字符串，所以不需要很多的转换操作
+    import urllib
+    import urllib2
+    import json
+    host = 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=vWjMjyPllXDpgxAFDinRj4E7&client_secret=jU0KGMZUVGujYR7vS2YP5EWIOqXLbaHe'
+    request = urllib2.Request(host)
+    request.add_header('Content-Type', 'application/json; charset=UTF-8')
+    response = urllib2.urlopen(request)
+    content = response.read()
+    if (content):
+        pass
+    result=json.loads(content)
+    expries_in=result["expires_in"]
+    access_token=result["access_token"]
+    url = "https://aip.baidubce.com/rest/2.0/face/v3/faceverify?access_token=" + access_token
+
+    import base64
+    f = open("sy.jpg", 'rb')
+    img = base64.b64encode(f.read())
+
+    # params = "[{\"image\":\"http://kousuanti.oss-cn-hangzhou.aliyuncs.com/2019_07_09_221537_sy.jpg\",\"image_type\":\"URL\"}]"
+    params = {"image":img, "image_type":"BASE64"}
+    params = json.dumps(params)
+    params = "[" + params + "]"
+
+    # params = urllib.parse.urlencode(params).encode(encoding='utf-8')    # encode 将字符串编码为字节； decode将字节解码为字符串；
+    # params = params.encode()
+    request = urllib2.Request(url=url, data=params)                       # post data 必须为字节，不能是字符串
+    request.add_header('Content-Type', 'application/json')
+    response = urllib2.urlopen(request)
+    content = response.read()
+    if content:
+        print(content)
 
 if __name__ == '__main__':
 
