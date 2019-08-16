@@ -8,7 +8,7 @@ def upload_ali_oss(path):
         auth = oss2.Auth('xxx', 'xxx')
         bucket = oss2.Bucket(auth, 'oss-cn-hangzhou.aliyuncs.com', 'xxx')
         bucket.put_object_from_file(filename, path)
-        return 'http://kousuanti.oss-cn-hangzhou.aliyuncs.com/' + filename
+        return 'http://xxx.oss-cn-hangzhou.aliyuncs.com/' + filename
     except Exception as e:
         return None
 
