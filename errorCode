@@ -1,0 +1,61 @@
+# -*- encoding: utf-8 -*-
+# @Author: SHJ
+# @Time: 2023-08-09 10:47 上午
+from enum import Enum
+import json
+
+
+class ERROR_CODE(Enum):
+    ERROR_CODE_SUCCESS = 0
+    ERROR_CODE_FILENOEXIT = 1000
+    ERROR_CODE_CARMASK_FAIL = 1001
+    ERROR_CODE_CARSHELTER_FAIL = 1002
+    ERROR_CODE_CARINTEGRITY_FAIL = 1003
+    ERROR_CODE_CARSPLIT_FAIL = 1004
+    ERROR_CODE_CARSPLITPART_FAIL = 1005
+    ERROR_CODE_CARBLUR_FAIL = 1006
+    ERROR_CODE_CARREFLECTLIGHT_FAIL = 1007
+    ERROR_CODE_CARINSUFFICIENTLIGHT = 1008
+    ERROR_CODE_SAVEJSON_FAIL = 1009
+    ERROR_CODE_DEPTHESTIMATE_FAIL = 1010
+    ERROR_CODE_SAVEDATA = 1011
+    ERROR_CODE_DATASOURCE = 1012
+    ERROR_CODE_UNKNOWN = 1013
+
+
+ERROR_CODE_MESSAGE = {ERROR_CODE.ERROR_CODE_SUCCESS: 'success',
+             ERROR_CODE.ERROR_CODE_FILENOEXIT: '图片文件路径不存在',
+             ERROR_CODE.ERROR_CODE_CARMASK_FAIL: '预测图片中车体区域 ERROR',
+             ERROR_CODE.ERROR_CODE_CARSHELTER_FAIL: '判断车体是否遮挡 ERROR',
+             ERROR_CODE.ERROR_CODE_CARINTEGRITY_FAIL: '车体是否拍摄完整性判断 ERROR',
+             ERROR_CODE.ERROR_CODE_CARSPLIT_FAIL: '车体是否被分为多部分判断 ERROR',
+             ERROR_CODE.ERROR_CODE_CARSPLITPART_FAIL: '车体是否被部分遮挡判断 ERROR',
+             ERROR_CODE.ERROR_CODE_CARBLUR_FAIL: '判断车体是否模糊 ERROR',
+             ERROR_CODE.ERROR_CODE_CARREFLECTLIGHT_FAIL: '判断车体是否反光 ERROR',
+             ERROR_CODE.ERROR_CODE_CARINSUFFICIENTLIGHT: '判断车体是否光线不足 ERROR',
+             ERROR_CODE.ERROR_CODE_SAVEJSON_FAIL: '保存车体质量判断结果 ERROR',
+             ERROR_CODE.ERROR_CODE_DEPTHESTIMATE_FAIL: '预测图片深度信息 ERROR',
+             ERROR_CODE.ERROR_CODE_SAVEDATA: '标签协议数据保存错误',
+             ERROR_CODE.ERROR_CODE_DATASOURCE: '数据来源错误',
+             ERROR_CODE.ERROR_CODE_UNKNOWN: '未知错误'}
+
+
+class errorCode(object):
+    def __init__(self, code=ERROR_CODE.ERROR_CODE_SUCCESS, data=""):
+        self.code = code
+        self.message = ERROR_CODE_MESSAGE.get(code)
+        self.data = data
+
+    def getCode(self):
+        return self.code
+
+    def getMessage(self):
+        return self.message
+
+    def getData(self):
+        return self.data
+
+    def toMap(self):
+        return {"code": self.code.value,
+                "message": self.message,
+                "data": self.data}
